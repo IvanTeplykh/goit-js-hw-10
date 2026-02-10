@@ -4,10 +4,13 @@ import iziToast from 'izitoast';
 
 const form = document.querySelector('.form');
 
+//make promise
 form.addEventListener('submit', event => {
   event.preventDefault();
   const delay = event.target.delay.value;
   const state = event.target.state.value;
+
+  //delay checker
   if (delay < 0) {
     iziToast.error({
       position: 'topRight',
@@ -19,6 +22,8 @@ form.addEventListener('submit', event => {
     form.reset();
     return;
   }
+
+  //promise creator
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
       if (state === 'fulfilled') {
@@ -29,6 +34,7 @@ form.addEventListener('submit', event => {
     }, delay);
   });
 
+  //promise handler
   promise
     .then(delayValue => {
       iziToast.success({
@@ -48,4 +54,7 @@ form.addEventListener('submit', event => {
         close: false,
       });
     });
+
+  //form reset
+  form.reset();
 });

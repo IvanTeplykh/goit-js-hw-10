@@ -3,7 +3,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 import 'izitoast/dist/css/iziToast.min.css';
 import flatpickr from 'flatpickr';
 import iziToast from 'izitoast';
-
+//elements
 const startBtn = document.querySelector('button[data-start]');
 const resetBtn = document.querySelector('button[data-reset]');
 const datetimePicker = document.querySelector('#datetime-picker');
@@ -20,6 +20,7 @@ const options = {
   onClose(selectedDates) {
     selectedDate = Date.parse(selectedDates[0]);
     const currentDate = Date.now();
+    //validate date
     if (selectedDate < currentDate) {
       iziToast.error({
         position: 'topRight',
@@ -66,13 +67,14 @@ startBtn.addEventListener('click', () => {
   timeRender();
   const intervalId = setInterval(() => setTimer(intervalId), 1000);
 });
-
+// resetBtn event listener
 resetBtn.addEventListener('click', () => {
   reset();
   selectedDate = null;
 });
 
-//functions
+//functions//
+//creat timer
 function setTimer(intervalId) {
   timeRender();
   if (selectedDate - Date.now() < 1000) {
@@ -80,7 +82,7 @@ function setTimer(intervalId) {
     reset(intervalId);
   }
 }
-
+//reset form
 function reset(intervalId) {
   datetimePicker.disabled = false;
   resetBtn.disabled = true;
@@ -90,7 +92,7 @@ function reset(intervalId) {
   hours.textContent = '00';
   days.textContent = '00';
 }
-
+//render output
 function timeRender() {
   const timeComponents = convertMs(selectedDate - Date.now());
   seconds.textContent = timeComponents.seconds.toString().padStart(2, '0');
